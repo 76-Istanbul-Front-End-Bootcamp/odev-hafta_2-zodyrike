@@ -2,16 +2,22 @@
   Odev 1:
   Asagidaki fonksiyonu "Hello, John ciktisi verecek sekilde duzenleyiniz."
  */
-
 var person = {
   name: "John",
-  message: function () {    
+  message: function () {
     console.log("Hello, " + this.name)
   }
 }
 
-var messageFunc = person.message
-messageFunc();
+person.message();
+//var messageFunc = person.message
+//messageFunc();
+/*
+messageFunc.call(person);
+bu sekilde de this atamasiyla cagirabiliriz.
+
+*/
+// burada person.message'i var degiskeniyle globalde bir seye tanimladigimiz icin global scope'dan global = window oldugu icin hello window ciktisi aliriz bunu duzeltmek icin cikti direkt olarak person.message kullanilarak alinabilir.
 
 
 /*  
@@ -23,15 +29,17 @@ messageFunc();
   sonuclarini yazdiracak sekilde duzenleyiniz.
 */
 var numbers = {
-  numbers: [[10,20,30], 2],
-  multiply: function(){
-    this.numbers[0].map(function(number, numberIndex){
-        const result = number * this.numbers[1];
-        console.log(result)
-    })
+  numbers: [[10, 20, 30], 2],
+  multiply: function () {
+    this.numbers[0].map(function (number, numberIndex) {
+      const result = number * this.numbers[1];
+      console.log(result)
+    }.bind(this))
   }
 };
-
+/*
+burada iki farkli yontemle bu ciktiyi alabiliriz bunlar bind kullanimi ile Explicit binding digeri ise arrow function.
+*/
 numbers.multiply();
 
 
@@ -42,8 +50,24 @@ numbers.multiply();
   Ornek : isValidName("John") true donmeli
   Ornek : isValidName(" J ohn") false donmeli
 */
-function isValidName(name){
+function isValidName(name) {
+  var a = ' zahit ';
+  var trimmedA = a.trim();
+  var divideBySpaces = trimmedA.split("");
 
+  var count = 0;
+  for(var i = 0; i < divideBySpaces.length; ++i){
+    if(divideBySpaces[i] == ' ')
+        count++;       
+}
+  if (count > 0) {
+    console.log(count == '0');
+  }else {
+    console.log(count == '0');
+/* 
+burada if else kullanimina gerek var mi emin olamadim ama kullanmak istedim
+*/
+}
 }
 
 /*
@@ -58,8 +82,55 @@ function isValidName(name){
   Ornek: katilimSaati("3", 20) 60 sonucunu vermelidir.
   Ornek: katilimSaati("5", "30") 150 sonucunu vermelidir.
 */
-function katilimSaati(dersSayisi, dersSuresi){
-
+/*
+Burada sayiya cevirilebilecek kisminda bir anlasmazliga dustugum icin boyle bir kontrol mekanizmasi olusturmaya calistim.
+*/
+function katilimSaati(dersSayisi, dersSuresi) {
+     const katilim = dersSayisi  * dersSuresi;
+        if (isNaN(katilim)){
+       console.log("lutfen sayiya cevirilebilecek bir arguman giriniz.")
+       
+     }else{
+ 
+      switch (dersSayisi){
+          case undefined:
+            console.log("lutfen sayiya cevirilebilecek bir arguman giriniz.");
+            break;
+          case null:
+            console.log("lutfen sayiya cevirilebilecek bir arguman giriniz.");
+            break;
+          case '':
+            console.log("lutfen sayiya cevirilebilecek bir arguman giriniz.");
+            break;
+          case true:
+            console.log("lutfen sayiya cevirilebilecek bir arguman giriniz.");
+            break;
+          case false:
+            console.log("lutfen sayiya cevirilebilecek bir arguman giriniz.");
+            break;
+          default:
+            switch (dersSuresi){
+              case undefined:
+                console.log("lutfen sayiya cevirilebilecek bir arguman giriniz.");
+                break;
+              case null:
+                console.log("lutfen sayiya cevirilebilecek bir arguman giriniz.");
+                break;
+              case '':
+                console.log("lutfen sayiya cevirilebilecek bir arguman giriniz.");
+                break;
+              case true:
+                console.log("lutfen sayiya cevirilebilecek bir arguman giriniz.");
+                break;
+              case false:
+                 console.log("lutfen sayiya cevirilebilecek bir arguman giriniz.");
+                 break;
+              default:
+                 console.log(`Toplam katildiginiz ders saati: ${katilim}` );
+                } 
+           break;
+           }
+     }
 }
-
+katilimSaati(3,20);
 
